@@ -127,8 +127,8 @@ public class Pivot extends Shared
         TestTDS result = temp.applyPivot(groupByColumns.reject(pivotCols::contains), pivotCols, aggColSpecs.collect(AggColSpecAccessor::_name));
 
         // populate the generic type for the return at execution time since it cannot be reasoned out at compile time
-        CoreInstance returnGenericType = getReturnGenericType(resolvedTypeParameters, resolvedMultiplicityParameters, functionExpressionToUseInStack, processorSupport);
-        returnGenericType.getValueForMetaPropertyToMany("typeArguments").getFirst().setKeyValues(Lists.mutable.with("rawType"), Lists.mutable.with(_RelationType.build(result.getColumnWithTypes().collect(c ->
+        GenericType returnGenericType = (GenericType) processorSupport.newGenericType(null, getReturnGenericType(resolvedTypeParameters, resolvedMultiplicityParameters, functionExpressionToUseInStack, processorSupport), true);
+        returnGenericType._rawType(_RelationType.build(result.getColumnWithTypes().collect(c ->
         {
             String type;
             switch (c.getTwo())
@@ -157,8 +157,8 @@ public class Pivot extends Shared
                 default:
                     throw new RuntimeException("ERROR " + c.getTwo() + " not supported in pivot!");
             }
-            return _Column.getColumnInstance(c.getOne(), false, type, null, processorSupport);
-        }), functionExpressionToUseInStack.getSourceInformation(), processorSupport)));
+            return _Column.getColumnInstance(c.getOne(), false, Multitype, null, processorSupport);
+        }), functionExpressionToUseInStack.getSourceInformation(), processorSupport));
 
         return ValueSpecificationBootstrap.wrapValueSpecification(new TDSCoreInstance(result, returnGenericType, repository, processorSupport), false, processorSupport);
     }

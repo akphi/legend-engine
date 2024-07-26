@@ -1155,6 +1155,7 @@ public class TestTDS
         }
     }
 
+    // TODO: clean this up so this is more readable and properly leverage the fundamental methods like sort()
     public TestTDS applyPivot(ListIterable<String> nonTransposeColumns, ListIterable<String> pivotColumns, ListIterable<String> aggColumns)
     {
         // compute the different unique combinations of values
