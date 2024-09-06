@@ -31,5 +31,6 @@
         <module>legend-engine-repl-relational</module>
         <module>legend-engine-repl-data-cube</module>
         <module>legend-engine-repl-app-assembly</module>
+        <module>legend-engine-repl-iceberg</module>
     </modules>
 </project>
